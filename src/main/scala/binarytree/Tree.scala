@@ -1,6 +1,6 @@
 package binarytree
 
-import binarytree.Tree.{balance, size, toList}
+import binarytree.Tree.balance
 
 enum Tree[+T] extends Iterable[T]:
   case Branch(left: Tree[T], value: T, right: Tree[T])
@@ -13,13 +13,18 @@ enum Tree[+T] extends Iterable[T]:
   override lazy val size: Int = Tree.size(this)
   override lazy val toList: List[T] = Tree.toList(this)
   override def iterator: Iterator[T] = toList.iterator
+  
+  def add[S >: T, U >: S](values: S*)(using ord: Ordering[U]): Tree[S] =
+    Tree.add(this, values)
 
 object Tree:
+  given (Int => String) = _.toString
+  
   inline def leaf[T](value: T): Tree[T] = Leaf(value)
-  val stump: Tree[Nothing] = Stump
+  inline def empty[T]: Tree[T] = Stump
   inline def create[T, U >: T](values: Seq[T])(using ord: Ordering[U]): Tree[T] = add(Stump, values)
   inline def apply[T, U >: T](values: T*)(using ord: Ordering[U]): Tree[T] = create(values)
-
+  
   def add[T, U >: T](tree: Tree[T], values: Seq[T])(using ord: Ordering[U]): Tree[T] =
     values.foldLeft(tree)(add) // this is equivalent to `values.foldLeft[Tree[T]](tree) { (tree, t) => add(tree, t) }`
 
