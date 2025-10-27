@@ -1,19 +1,19 @@
 package binarytree
 
-import binarytree.Tree.{Branch, Leaf, Stump, iterator}
+import binarytree.Tree.{Branch, Leaf, Stump}
 
 class TreeIteratorSuite extends munit.FunSuite:
   given intToString: (Int => String) = _.toString
 
   test("iterator on Stump") {
     val stump = Stump
-    val iter = iterator(stump)
+    val iter = Stump.iterator
     assertEquals(iter.hasNext, false)
   }
 
   test("iterator on Leaf") {
     val leaf = Leaf(42)
-    val iter = iterator(leaf)
+    val iter = leaf.iterator
     assertEquals(iter.hasNext, true)
     assertEquals(iter.next(), 42)
     assertEquals(iter.hasNext, false)
@@ -21,7 +21,7 @@ class TreeIteratorSuite extends munit.FunSuite:
 
   test("iterator on simple Branch") {
     val tree = Branch(Leaf(1), 2, Leaf(3))
-    val iter = iterator(tree)
+    val iter = tree.iterator
     assertEquals(iter.hasNext, true)
     assertEquals(iter.next(), 1) // Start with left-most leaf
     assertEquals(iter.next(), 2) // Then parent
@@ -31,7 +31,7 @@ class TreeIteratorSuite extends munit.FunSuite:
 
   test("iterator on Branch with Stump") {
     val tree = Branch(Stump, 2, Leaf(3))
-    val iter = iterator(tree)
+    val iter = tree.iterator
     assertEquals(iter.hasNext, true)
     assertEquals(iter.next(), 2) // Start with parent since left is Stump
     assertEquals(iter.next(), 3) // Then right leaf
@@ -44,7 +44,7 @@ class TreeIteratorSuite extends munit.FunSuite:
       4,
       Branch(Stump, 5, Leaf(6))
     )
-    val iter = iterator(tree)
+    val iter = tree.iterator
     assertEquals(iter.hasNext, true)
     assertEquals(iter.next(), 1) // Left-most leaf
     assertEquals(iter.next(), 2) // Parent of left-most leaf
@@ -69,7 +69,7 @@ class TreeIteratorSuite extends munit.FunSuite:
         Branch(Stump, 8, Leaf(9))
       )
     )
-    val iter = iterator(tree)
+    val iter = tree.iterator
     val result = iter.toList
     assertEquals(result, List(1, 2, 3, 4, 5, 6, 7, 8, 9))
   }
@@ -77,7 +77,7 @@ class TreeIteratorSuite extends munit.FunSuite:
   test("iterator collects all elements") {
     val values = List(5, 3, 7, 2, 4, 6, 8, 1, 9)
     val tree = values.foldLeft(Stump: Tree[Int])((t, v) => Tree.add(t, v))
-    val iter = iterator(tree)
+    val iter = tree.iterator
     val result = iter.toList
     assertEquals(result.sorted, values.sorted)
     assertEquals(result.length, values.length)

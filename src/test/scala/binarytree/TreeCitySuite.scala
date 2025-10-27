@@ -1,6 +1,6 @@
 package binarytree
 
-import binarytree.Tree.{Branch, Leaf, Stump, add, create}
+import binarytree.Tree.{Branch, Leaf, Stump, add}
 
 class TreeCitySuite extends munit.FunSuite:
   given (City => String) = c => s"${c.name}: ${c.population}"
@@ -114,7 +114,7 @@ class TreeCitySuite extends munit.FunSuite:
     val cities = List(tokyo, berlin, paris, london, washingtonDC)
 
     // Create a tree using Tree.create
-    val tree = create(cities)
+    val tree = Tree(cities)
 
     // Verify the structure of the resulting tree
     // The structure depends on the order in which cities are added to the tree

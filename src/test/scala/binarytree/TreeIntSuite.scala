@@ -93,7 +93,7 @@ class TreeIntSuite extends munit.FunSuite:
 
   test("balance simple Branch") {
     // Create a tree with elements in non-sorted order
-    val tree = Tree(30, 10, 50)
+    val tree = Tree(Seq(30, 10, 50))
     val result = tree.balanced
 
     // The balanced tree should have the middle element (30) as the root
@@ -104,7 +104,7 @@ class TreeIntSuite extends munit.FunSuite:
 
   test("balance unbalanced tree") {
     // Create a tree with elements in non-sorted order
-    val tree = Tree(10, 20, 30, 40, 50)
+    val tree = Tree(Seq(10, 20, 30, 40, 50))
     val result = tree.balanced
 
     // Check that the tree is balanced and contains all the original elements
@@ -124,7 +124,7 @@ class TreeIntSuite extends munit.FunSuite:
 
   test("balance complex unbalanced tree") {
     // Create a tree with elements in non-sorted order
-    val tree = Tree(100, 50, 150, 25, 75, 125, 175)
+    val tree = Tree(Seq(100, 50, 150, 25, 75, 125, 175))
     val result = tree.balanced
 
     // Check that the tree is balanced and contains all the original elements
