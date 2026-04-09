@@ -43,18 +43,18 @@ object Tree {
     case Branch(left, value, right) => size(left) + 1 + size(right)
   }
 
-  def toString[T](tree: Tree[T], acc: String = "", level: Int = 0)(using str: T => String): String = {
-    def append(valueStr: String) = s"$acc\n${"-" * level}$valueStr"
+  private def toString[T](tree: Tree[T], acc: String, level: Int)(using str: T => String): String = {
+    inline def append(valueStr: String) = s"$acc\n${"-" * level}$valueStr"
     tree match {
-      case Stump =>
-        append("X")
-      case Leaf(value) =>
-        append(str(value))
+      case Stump                      => append("X")
+      case Leaf(value)                => append(str(value))
       case Branch(left, value, right) =>
         val newAcc = toString(left, append(str(value)), level + 1)
         toString(right, newAcc, level + 1)
     }
   }
+
+  def toString[T](tree: Tree[T])(using str: T => String): String = toString(tree, "", 0)
 
   def add[T, U >: T](tree: Tree[T], values: Seq[T])(using ord: Ordering[U]): Tree[T] =
     values.foldLeft(tree)((acc, value) => add(acc, value))

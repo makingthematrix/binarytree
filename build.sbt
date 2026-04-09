@@ -1,7 +1,7 @@
 
 ThisBuild / version := "0.1.0-SNAPSHOT"
 
-val _scalaVersion = "3.7.1"
+val _scalaVersion = "3.8.3"
 
 name := "binarytree"
 licenses := Seq("GPL 3.0" -> url("https://www.gnu.org/licenses/gpl-3.0.en.html"))
