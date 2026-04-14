@@ -2,6 +2,15 @@ package binarytree
 
 import scala.collection.mutable
 
+/**
+  * Represents a generic binary tree structure that can contain elements of type T.
+  * The `Tree` can either be:
+  * - `Branch`, representing an internal node with a left subtree, a value, and a right subtree.
+  * - `Leaf`, representing a terminal node containing a value.
+  * - `Stump`, representing an empty tree.
+  *
+  * @tparam T the type of elements stored in the tree
+  */
 enum Tree[+T] extends Iterable[T] {
   case Branch(left: Tree[T], value: T, right: Tree[T])
   case Leaf(value: T)
