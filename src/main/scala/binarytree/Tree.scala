@@ -2,6 +2,7 @@ package binarytree
 
 import scala.collection.mutable
 
+/* Documenting Tree */
 enum Tree[+T] extends Iterable[T] {
   case Branch(left: Tree[T], value: T, right: Tree[T])
   case Leaf(value: T)
