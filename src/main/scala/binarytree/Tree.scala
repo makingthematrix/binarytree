@@ -2,6 +2,11 @@ package binarytree
 
 import scala.collection.mutable
 
+/**
+  * Represents a binary tree that can hold values of type `T`.
+  * This tree can be used to store and manipulate hierarchical data, providing functionality
+  * such as adding elements, calculating size, converting to a list, and balancing the tree.
+  */
 enum Tree[+T] extends Iterable[T] {
   case Branch(left: Tree[T], value: T, right: Tree[T])
   case Leaf(value: T)
