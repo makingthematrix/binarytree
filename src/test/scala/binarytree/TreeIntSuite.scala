@@ -2,7 +2,7 @@ package binarytree
 
 import binarytree.Tree.{Branch, Leaf, Stump, add}
 
-class TreeIntSuite extends munit.FunSuite:
+class TreeIntSuite extends munit.FunSuite {
   given intToString: (Int => String) = _.toString
 
   test("serialize Stump") {

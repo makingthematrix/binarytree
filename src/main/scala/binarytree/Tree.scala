@@ -70,7 +70,7 @@ object Tree {
     }
   }
 
-  def toString[T](tree: Tree[T])(using str: T => String): String = toString(tree, "", 0)
+  inline def toString[T](tree: Tree[T])(using str: T => String): String = toString(tree, "", 0)
 
   def add[T, U >: T](tree: Tree[T], values: Seq[T])(using ord: Ordering[U]): Tree[T] =
     values.foldLeft(tree)((acc, value) => add(acc, value))
