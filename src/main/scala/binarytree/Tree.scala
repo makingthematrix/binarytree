@@ -2,6 +2,8 @@ package binarytree
 
 import scala.collection.mutable
 
+// Simple comment added to Tree.scala
+
 /**
   * Represents a generic binary tree structure that can contain elements of type T.
   * The `Tree` can either be:
