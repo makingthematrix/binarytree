@@ -2,6 +2,8 @@ package binarytree
 
 import scala.collection.mutable
 
+// Binary Tree ADT implementation with Branch, Leaf, and Stump (empty) cases
+
 enum Tree[+T] extends Iterable[T] {
   case Branch(left: Tree[T], value: T, right: Tree[T])
   case Leaf(value: T)
