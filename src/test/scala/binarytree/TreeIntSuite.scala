@@ -2,7 +2,7 @@ package binarytree
 
 import binarytree.Tree.{Branch, Leaf, Stump, add}
 
-class TreeIntSuite extends munit.FunSuite:
+class TreeIntSuite extends munit.FunSuite {
   given intToString: (Int => String) = _.toString
 
   test("serialize Stump") {
@@ -152,3 +152,69 @@ class TreeIntSuite extends munit.FunSuite:
     val expected = Branch(Leaf(10), 20, Leaf(30))
     assertEquals(result, expected)
   }
+
+  // Tests for Tree.height method
+  test("height of Stump") {
+    val stump = Stump
+    assertEquals(stump.height, 0)
+  }
+
+  test("height of Leaf") {
+    val leaf = Leaf(42)
+    assertEquals(leaf.height, 1)
+  }
+
+  test("height of simple Branch") {
+    val tree = Branch(Leaf(1), 2, Leaf(3))
+    assertEquals(tree.height, 2)
+  }
+
+  test("height of unbalanced tree (left-heavy)") {
+    val tree = Branch(
+      Branch(Leaf(1), 2, Stump),
+      3,
+      Leaf(4)
+    )
+    assertEquals(tree.height, 3)
+  }
+
+  test("height of unbalanced tree (right-heavy)") {
+    val tree = Branch(
+      Leaf(1),
+      2,
+      Branch(Stump, 3, Leaf(4))
+    )
+    assertEquals(tree.height, 3)
+  }
+
+  test("height of complex tree") {
+    val tree = Branch(
+      Branch(Leaf(1), 2, Leaf(3)),
+      4,
+      Branch(Stump, 5, Leaf(6))
+    )
+    assertEquals(tree.height, 3)
+  }
+
+  test("height of deeply nested tree") {
+    val tree = Branch(
+      Branch(
+        Branch(
+          Branch(Leaf(1), 2, Stump),
+          3,
+          Stump
+        ),
+        4,
+        Stump
+      ),
+      5,
+      Stump
+    )
+    assertEquals(tree.height, 5)
+  }
+
+  test("height using companion object method") {
+    val tree = Branch(Leaf(1), 2, Leaf(3))
+    assertEquals(Tree.height(tree), 2)
+  }
+}

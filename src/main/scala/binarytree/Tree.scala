@@ -23,6 +23,7 @@ enum Tree[+T] extends Iterable[T] {
   override lazy val size: Int = Tree.size(this)
   override lazy val toList: List[T] = Tree.toList(this)
   override def iterator: Iterator[T] = toList.iterator
+  lazy val height: Int = Tree.height(this)
 
   def balanced[U >: T](using ord: Ordering[U]): Tree[T] = {
     val buffer = toList.toBuffer
@@ -52,6 +53,12 @@ object Tree {
     case Branch(left, value, right) => size(left) + 1 + size(right)
   }
 
+  def height[T](tree: Tree[T]): Int = tree match {
+    case Stump                      => 0
+    case Leaf(_)                    => 1
+    case Branch(left, _, right)     => 1 + math.max(height(left), height(right))
+  }
+
   private def toString[T](tree: Tree[T], acc: String, level: Int)(using str: T => String): String = {
     inline def append(valueStr: String) = s"$acc\n${"-" * level}$valueStr"
     tree match {
@@ -63,7 +70,7 @@ object Tree {
     }
   }
 
-  def toString[T](tree: Tree[T])(using str: T => String): String = toString(tree, "", 0)
+  inline def toString[T](tree: Tree[T])(using str: T => String): String = toString(tree, "", 0)
 
   def add[T, U >: T](tree: Tree[T], values: Seq[T])(using ord: Ordering[U]): Tree[T] =
     values.foldLeft(tree)((acc, value) => add(acc, value))
